@@ -17,4 +17,5 @@ public class Brands {
 	private Integer id;
 	@Column(name = "brand_name")
 	private String name;
+
 }
