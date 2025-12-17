@@ -6,7 +6,6 @@ public class ResourceNotFoundException extends ApiException{
 	/*
 	  *	public ResourceNotFoundException(HttpStatus status, String message) {
 	  *		super(status, message);
-	  *		// TODO Auto-generated constructor stub
 	  *	}
 	*/
 	public ResourceNotFoundException(String resourceName , Integer id) {

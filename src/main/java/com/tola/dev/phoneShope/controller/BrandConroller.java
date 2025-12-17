@@ -31,12 +31,12 @@ public class BrandConroller {
 		Brands brands =  BrandMapper.iNSANCE.toBrands(brandDTO);
 		
 		brands = brandService.CreateBrand(brands);
-/*
- * do not use DTO Data Transfer Object response all the we insert 
- * 	return ResponseEntity.ok(brands);
- * 
- * use this DTO Data Transfer Object we can set response 
- */
+	/*
+	 * do not use DTO Data Transfer Object response all the we insert 
+	 * 	return ResponseEntity.ok(brands);
+	 * 
+	 * use this DTO Data Transfer Object we can set response 
+	 */
 		return ResponseEntity.ok(BrandMapper.iNSANCE.toBrandDTO(brands));
 	}
 	@GetMapping("{id}")
@@ -56,6 +56,7 @@ public class BrandConroller {
 		
 		return ResponseEntity.ok(brandService.getBrands());
 	}
+	
 	@GetMapping("filter")
 	public ResponseEntity<?> getbrands(@RequestParam("name") String nameString){
 		List<BrandDTO> list = brandService.getBrands(nameString)
