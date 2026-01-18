@@ -1,9 +1,12 @@
 package com.tola.dev.phoneShope.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.jaxb.SpringDataJaxb.PageDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tola.dev.phoneShope.dto.BrandDTO;
+import com.tola.dev.phoneShope.dto.PageDTO;
 import com.tola.dev.phoneShope.entity.Brands;
 import com.tola.dev.phoneShope.mapper.BrandMapper;
 import com.tola.dev.phoneShope.service.BrandService;
 
 @RestController
-@RequestMapping("brands")
+@RequestMapping("api/brands")
 public class BrandConroller {
 
 	@Autowired
@@ -64,4 +68,27 @@ public class BrandConroller {
 					.collect(Collectors.toList());
 		return ResponseEntity.ok(list);
 	}
+
+	@GetMapping("search")
+	public ResponseEntity<?> getBrands(@RequestParam Map<String, String> params){
+		List<BrandDTO> list = brandService.getBrands(params)
+					.stream().map(brands -> BrandMapper.iNSANCE.toBrandDTO(brands))
+					.collect(Collectors.toList());
+		return ResponseEntity.ok(list);
+	}
+	
+
+//	@GetMapping
+//	public ResponseEntity<?> getBrand(@RequestParam Map<String, String> params){
+//		Page<Brands> page = brandService.getBrand(params);
+//		
+//		return ResponseEntity.ok(page);
+//	}
+	
+	@GetMapping("/page")
+    public ResponseEntity<?> getBrand(@RequestParam(required = false) Map<String, String> params) {
+        Page<Brands> page = brandService.getBrand(params);
+        PageDTO pageDTO = new PageDTO(page);
+        return ResponseEntity.ok(pageDTO);
+    }
 }
