@@ -18,10 +18,14 @@ import com.tola.dev.phoneShope.service.util.PageUtil;
 import com.tola.dev.phoneShope.specification.BrandSpecification;
 import com.tola.dev.phoneShope.specification.BrandsFilter;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BrandServiceImpl implements BrandService {
 	@Autowired
-	private BrandRepository brandRepository;
+	private final BrandRepository brandRepository;
 
 	@Override
 	public Brands CreateBrand(Brands brands) {
@@ -42,7 +46,8 @@ public class BrandServiceImpl implements BrandService {
 		 * "Brand with id = "+id+"not found");
 		 */
 
-		return brandRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Brands", id));
+		return brandRepository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Brands", id));
 		/*
 		 * .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,String.
 		 * format("brand with id = %d not found", id))); .orElseThrow(() -> new
@@ -69,7 +74,7 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	public List<Brands> getBrands(String name) {
 
-		return brandRepository.findByNameIgnoreCase(name);
+		return brandRepository.findByNameContainingIgnoreCase(name);
 	}
 
 	@Override

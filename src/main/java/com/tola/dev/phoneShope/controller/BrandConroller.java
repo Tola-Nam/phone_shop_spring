@@ -24,7 +24,7 @@ import com.tola.dev.phoneShope.mapper.BrandMapper;
 import com.tola.dev.phoneShope.service.BrandService;
 
 @RestController
-@RequestMapping("api/brands")
+@RequestMapping("/brands")
 public class BrandConroller {
 
 	@Autowired
