@@ -20,6 +20,6 @@ public class Models {
 	@Column(name = "model_name")
 	private String name;
 	@ManyToOne
-	@JoinColumn(name = "brand_id")
+	@JoinColumn(name = "brandId")
 	private Brands brands;
 }

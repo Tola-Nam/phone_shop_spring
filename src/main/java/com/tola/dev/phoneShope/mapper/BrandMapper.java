@@ -1,6 +1,5 @@
 package com.tola.dev.phoneShope.mapper;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import com.tola.dev.phoneShope.dto.BrandDTO;
