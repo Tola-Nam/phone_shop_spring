@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: 008-create-sales
+      author: tola.dev001@gmail.com
+      changes:
+        - createTable:
+            tableName: sales
+            columns:
+              - column:
+                  name: sale_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: sold_date
+                  type: TIMESTAMP

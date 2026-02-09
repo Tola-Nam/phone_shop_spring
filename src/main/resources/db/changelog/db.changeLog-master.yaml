@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/001_init_database_schema.yml
+  - include:
+      file: db/changelog/002_insert_brands.yml
+  - include:
+      file: db/changelog/003-create-models.yml
+  - include:
+      file: db/changelog/004-create-colors.yml
+  - include:
+      file: db/changelog/005-create-products.yml
+  - include:
+      file: db/changelog/006-create-product-import-histories.yml
+  - include:
+      file: db/changelog/007-create-sales.yml
+  - include:
+      file: db/changelog/008-create-sale-details.yml

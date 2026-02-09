@@ -1,0 +1,268 @@
+databaseChangeLog:
+- changeSet:
+    id: 1770480847212-1
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: brands_pkey
+            name: brand_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: brand_name
+            type: VARCHAR(255)
+        tableName: brands
+- changeSet:
+    id: 1770480847212-2
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: colors_pkey
+            name: color_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: color_name
+            type: VARCHAR(255)
+        tableName: colors
+- changeSet:
+    id: 1770480847212-3
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: models_pkey
+            name: model_id
+            type: BIGINT
+        - column:
+            constraints:
+              nullable: false
+            name: model_name
+            type: VARCHAR(255)
+        - column:
+            name: brand_id
+            type: BIGINT
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+            name: id
+            type: BIGINT
+        tableName: models
+- changeSet:
+    id: 1770480847212-4
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: product_import_histories_pkey
+            name: product_import_history_id
+            type: BIGINT
+        - column:
+            name: date_import
+            type: TIMESTAMP WITHOUT TIME ZONE
+        - column:
+            name: import_unit
+            type: INTEGER
+        - column:
+            name: price_per_unit
+            type: numeric(38, 2)
+        - column:
+            name: product_id
+            type: BIGINT
+        tableName: product_import_histories
+- changeSet:
+    id: 1770480847212-5
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: products_pkey
+            name: product_id
+            type: BIGINT
+        - column:
+            name: image_path
+            type: VARCHAR(255)
+        - column:
+            constraints:
+              nullable: false
+            name: product_name
+            type: VARCHAR(255)
+        - column:
+            name: available_unit
+            type: INTEGER
+        - column:
+            name: model_id
+            type: BIGINT
+        - column:
+            name: color_id
+            type: BIGINT
+        - column:
+            name: sale_price
+            type: numeric(38, 2)
+        tableName: products
+- changeSet:
+    id: 1770480847212-6
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sale_details_pkey
+            name: sale_detail_id
+            type: BIGINT
+        - column:
+            name: sale_id
+            type: BIGINT
+        - column:
+            name: product_id
+            type: BIGINT
+        - column:
+            name: amount
+            type: numeric(38, 2)
+        - column:
+            name: unit
+            type: INTEGER
+        tableName: sale_details
+- changeSet:
+    id: 1770480847212-7
+    author: tola (generated)
+    changes:
+    - createTable:
+        columns:
+        - column:
+            autoIncrement: true
+            constraints:
+              nullable: false
+              primaryKey: true
+              primaryKeyName: sales_pkey
+            name: sale_id
+            type: BIGINT
+        - column:
+            name: sold_date
+            type: TIMESTAMP WITHOUT TIME ZONE
+        tableName: sales
+- changeSet:
+    id: 1770480847212-8
+    author: tola (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: product_id
+        baseTableName: product_import_histories
+        constraintName: fk_import_history_product
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: product_id
+        referencedTableName: products
+        validate: true
+- changeSet:
+    id: 1770480847212-9
+    author: tola (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: brand_id
+        baseTableName: models
+        constraintName: fk_models_brand
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: brand_id
+        referencedTableName: brands
+        validate: true
+- changeSet:
+    id: 1770480847212-10
+    author: tola (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: color_id
+        baseTableName: products
+        constraintName: fk_products_color
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: color_id
+        referencedTableName: colors
+        validate: true
+- changeSet:
+    id: 1770480847212-11
+    author: tola (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: model_id
+        baseTableName: products
+        constraintName: fk_products_model
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: model_id
+        referencedTableName: models
+        validate: true
+- changeSet:
+    id: 1770480847212-12
+    author: tola (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: product_id
+        baseTableName: sale_details
+        constraintName: fk_sale_details_product
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: product_id
+        referencedTableName: products
+        validate: true
+- changeSet:
+    id: 1770480847212-13
+    author: tola (generated)
+    changes:
+    - addForeignKeyConstraint:
+        baseColumnNames: sale_id
+        baseTableName: sale_details
+        constraintName: fk_sale_details_sale
+        deferrable: false
+        initiallyDeferred: false
+        onDelete: NO ACTION
+        onUpdate: NO ACTION
+        referencedColumnNames: sale_id
+        referencedTableName: sales
+        validate: true
+

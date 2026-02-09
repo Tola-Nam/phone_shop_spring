@@ -1,0 +1,55 @@
+databaseChangeLog:
+  - changeSet:
+      id: 006-create-products
+      author: tola.dev001@gmail.com
+      changes:
+        - createTable:
+            tableName: products
+            columns:
+              - column:
+                  name: product_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: image_path
+                  type: VARCHAR(255)
+
+              - column:
+                  name: product_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: available_unit
+                  type: INT
+
+              - column:
+                  name: model_id
+                  type: BIGINT
+
+              - column:
+                  name: color_id
+                  type: BIGINT
+
+              - column:
+                  name: sale_price
+                  type: DECIMAL(15,2)
+
+        - addForeignKeyConstraint:
+            baseTableName: products
+            baseColumnNames: model_id
+            referencedTableName: models
+            referencedColumnNames: model_id
+            constraintName: fk_products_model
+
+        - addForeignKeyConstraint:
+            baseTableName: products
+            baseColumnNames: color_id
+            referencedTableName: colors
+            referencedColumnNames: color_id
+            constraintName: fk_products_color

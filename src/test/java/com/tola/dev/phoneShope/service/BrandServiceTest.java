@@ -6,7 +6,6 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.lang.module.ResolutionException;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -14,19 +13,25 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import com.tola.dev.phoneShope.entity.Brands;
 import com.tola.dev.phoneShope.exception.ResourceNotFoundException;
 import com.tola.dev.phoneShope.repository.BrandRepository;
 import com.tola.dev.phoneShope.service.impl.BrandServiceImpl;
 
-
+@DataJpaTest
+@ActiveProfiles("test")
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @ExtendWith(MockitoExtension.class)
 public class BrandServiceTest {
 	@Mock
 	private BrandRepository brandRepository;
-	
+//	@Autowired
 	private BrandService brandService;
+
 	@BeforeEach
 	public void SetUp() {
 		brandService = new BrandServiceImpl(brandRepository);
@@ -55,35 +60,36 @@ public class BrandServiceTest {
 //		when
 		brandService.CreateBrand(brands);
 //		then
-		verify(brandRepository,times(1)).save(brands);
+		verify(brandRepository, times(1)).save(brands);
 	}
+
 	@Test
 	public void testGetByIdSuccess() {
 //		given 
 		Brands brands = new Brands();
 		brands.setName("Apple");
-		brands.setId(1);
-		
+		brands.setId(1l);
+
 //		when
-		when(brandRepository.findById(1)).thenReturn(Optional.of(brands));
-		Brands brandReturnBrands = brandService.getById(1);
+		when(brandRepository.findById(1l)).thenReturn(Optional.of(brands));
+		Brands brandReturnBrands = brandService.getById(1l);
 //		then
-		
+
 		assertEquals(1, brandReturnBrands.getId());
 		assertEquals("Apple", brandReturnBrands.getName());
-		
+
 	}
+
 	@Test
-	public  void testGetByIdThrow() {
-		//given
-		//when
-		when(brandRepository.findById(2)).thenReturn(Optional.empty());
-		assertThatThrownBy(()-> brandService.getById(2)).isInstanceOf(ResourceNotFoundException.class)
-	    .hasMessageContaining("id = 2")
-	    .hasMessageContaining("not found");
-		
+	public void testGetByIdThrow() {
+		// given
+		// when
+		when(brandRepository.findById(2l)).thenReturn(Optional.empty());
+		assertThatThrownBy(() -> brandService.getById(2l)).isInstanceOf(ResourceNotFoundException.class)
+				.hasMessageContaining("id = 2").hasMessageContaining("not found");
+
 //		brandService.getById(2);
-		
-		//then
+
+		// then
 	}
 }

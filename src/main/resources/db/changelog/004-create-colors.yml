@@ -1,0 +1,20 @@
+databaseChangeLog:
+  - changeSet:
+      id: 004-create-colors
+      author: tola.dev001@gmail.com
+      changes:
+        - createTable:
+            tableName: colors
+            columns:
+              - column:
+                  name: color_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: color_name
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false

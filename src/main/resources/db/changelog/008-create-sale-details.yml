@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: 007-create-sale-details
+      author: tola.dev001@gmail.com
+      changes:
+        - createTable:
+            tableName: sale_details
+            columns:
+              - column:
+                  name: sale_detail_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: sale_id
+                  type: BIGINT
+
+              - column:
+                  name: product_id
+                  type: BIGINT
+
+              - column:
+                  name: amount
+                  type: DECIMAL(15,2)
+
+              - column:
+                  name: unit
+                  type: INT
+
+        - addForeignKeyConstraint:
+            baseTableName: sale_details
+            baseColumnNames: sale_id
+            referencedTableName: sales
+            referencedColumnNames: sale_id
+            constraintName: fk_sale_details_sale
+
+        - addForeignKeyConstraint:
+            baseTableName: sale_details
+            baseColumnNames: product_id
+            referencedTableName: products
+            referencedColumnNames: product_id
+            constraintName: fk_sale_details_product

@@ -1,0 +1,38 @@
+databaseChangeLog:
+  - changeSet:
+      id: 005-create-product-import-histories
+      author: tola.dev001@gmail.com
+      changes:
+        - createTable:
+            tableName: product_import_histories
+            columns:
+              - column:
+                  name: product_import_history_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: date_import
+                  type: TIMESTAMP
+
+              - column:
+                  name: import_unit
+                  type: INT
+
+              - column:
+                  name: price_per_unit
+                  type: DECIMAL(15,2)
+
+              - column:
+                  name: product_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: product_import_histories
+            baseColumnNames: product_id
+            referencedTableName: products
+            referencedColumnNames: product_id
+            constraintName: fk_import_history_product

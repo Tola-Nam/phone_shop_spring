@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: 003-create-models
+      author: tola.dev001@gmail.com
+      changes:
+        - createTable:
+            tableName: models
+            columns:
+              - column:
+                  name: model_id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+
+              - column:
+                  name: model_name
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+
+              - column:
+                  name: brand_id
+                  type: BIGINT
+
+        - addForeignKeyConstraint:
+            baseTableName: models
+            baseColumnNames: brand_id
+            referencedTableName: brands
+            referencedColumnNames: brand_id
+            constraintName: fk_models_brand

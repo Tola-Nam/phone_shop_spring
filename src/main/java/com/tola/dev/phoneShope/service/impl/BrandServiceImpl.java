@@ -18,7 +18,6 @@ import com.tola.dev.phoneShope.service.util.PageUtil;
 import com.tola.dev.phoneShope.specification.BrandSpecification;
 import com.tola.dev.phoneShope.specification.BrandsFilter;
 
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -37,7 +36,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Brands getById(Integer id) {
+	public Brands getById(Long id) {
 		// TODO Auto-generated method stub
 		/*
 		 * Optional<Brands> brandOptional = brandRepository.findById(id);
@@ -46,8 +45,7 @@ public class BrandServiceImpl implements BrandService {
 		 * "Brand with id = "+id+"not found");
 		 */
 
-		return brandRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Brands", id));
+		return brandRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Brands", id));
 		/*
 		 * .orElseThrow(() -> new ApiException(HttpStatus.NOT_FOUND,String.
 		 * format("brand with id = %d not found", id))); .orElseThrow(() -> new
@@ -58,8 +56,7 @@ public class BrandServiceImpl implements BrandService {
 	}
 
 	@Override
-	public Brands updateById(Integer id, Brands brandsUpdateBrands) {
-		// TODO Auto-generated method stub
+	public Brands updateById(Long id, Brands brandsUpdateBrands) {
 		Brands brands = getById(id);
 		brands.setName(brandsUpdateBrands.getName());
 		return brandRepository.save(brands);
@@ -80,49 +77,47 @@ public class BrandServiceImpl implements BrandService {
 	@Override
 	public List<Brands> getBrands(Map<String, String> params) {
 		BrandsFilter brandsFilter = new BrandsFilter();
-		if(params.containsKey(("name"))) {
+		if (params.containsKey(("name"))) {
 			String name = params.get("name");
 			brandsFilter.setName(name);
 		}
-		
-		if(params.containsKey(("id"))){
-			String id= params.get("id");
+
+		if (params.containsKey(("id"))) {
+			String id = params.get("id");
 			brandsFilter.setId(Integer.parseInt(id));
 		}
 		BrandSpecification brandSpecification = new BrandSpecification(brandsFilter);
 		return brandRepository.findAll(brandSpecification);
 	}
-	
-	
+
 	@Override
 	public Page<Brands> getBrand(Map<String, String> params) {
 		BrandsFilter brandsFilter = new BrandsFilter();
-		if(params.containsKey(("name"))) {
+		if (params.containsKey(("name"))) {
 			String name = params.get("name");
 			brandsFilter.setName(name);
 		}
-		
-		if(params.containsKey(("id"))){
-			String id= params.get("id");
+
+		if (params.containsKey(("id"))) {
+			String id = params.get("id");
 			brandsFilter.setId(Integer.parseInt(id));
 		}
-		
+
 		int pageLimit = PageUtil.DEFAULT_PAGE_LIMIT;
-		
-		if(params.containsKey(PageUtil.PAGE_LIMIT)) {
+
+		if (params.containsKey(PageUtil.PAGE_LIMIT)) {
 			pageLimit = Integer.parseInt(params.get((PageUtil.PAGE_LIMIT)));
 		}
 		int pageNumber = PageUtil.DEFAULT_PAGE_NUMBER;
-		
-		if(params.containsKey(PageUtil.PAGE_NUMBER)) {
+
+		if (params.containsKey(PageUtil.PAGE_NUMBER)) {
 			pageNumber = Integer.parseInt(params.get(PageUtil.PAGE_NUMBER));
 		}
-		
+
 		BrandSpecification brandSpecification = new BrandSpecification(brandsFilter);
-		Pageable pageable = PageUtil.getPageable(pageNumber, pageLimit);
-		Page<Brands> page = brandRepository.findAll(brandSpecification , pageable);
+		Pageable pageable = PageUtil.getPageable(pageNumber-1, pageLimit);
+		Page<Brands> page = brandRepository.findAll(brandSpecification, pageable);
 		return page;
 	}
-
 
 }

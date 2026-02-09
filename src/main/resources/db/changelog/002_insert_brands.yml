@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002_insert_brands
+      author: tola.dev001@gmail.com
+      changes:
+        - loadData:
+            tableName: brands
+            file: db/data/002_brands.csv
+            separator: ","
+            columns:
+              - column:
+                  name: brand_id
+                  type: NUMERIC
+              - column:
+                  name: brand_name
+                  type: STRING
